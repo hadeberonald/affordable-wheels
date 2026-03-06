@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg
+           bg-accent text-black font-semibold text-sm tracking-wide
+           transition-all duration-200
+           hover:bg-accent-light
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 24px rgba(85, 181, 203, 0.35);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg
+           border border-accent text-accent font-semibold text-sm tracking-wide
+           bg-transparent transition-all duration-200
+           hover:bg-accent hover:text-black
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-outline:hover {
+    box-shadow: 0 0 24px rgba(85, 181, 203, 0.35);
+  }
+
+  .btn-outline-white {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg
+           text-white font-semibold text-sm tracking-wide
+           bg-transparent transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    border: 1px solid rgba(255,255,255,0.30);
+  }
+  .btn-outline-white:hover {
+    @apply text-accent;
+    border-color: #55b5cb;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg
+           text-mid font-medium text-sm transition-all duration-200
+           hover:text-white;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-dark-card rounded-xl transition-all duration-300;
+    border: 1px solid #1e1e1e;
+  }
+
+  .card-hover {
+    @apply card;
+  }
+  .card-hover:hover {
+    border-color: rgba(85,181,203,0.40);
+    box-shadow: 0 0 12px rgba(85,181,203,0.22);
+  }
+
+  .card-glow {
+    @apply card;
+    border-color: rgba(85,181,203,0.30);
+    box-shadow: 0 0 12px rgba(85,181,203,0.22);
+  }
+
+  /* ── Input Fields ── */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg bg-dark-light text-white
+           placeholder-mid text-sm transition-all duration-200 focus:outline-none;
+    border: 1px solid #1e1e1e;
+  }
+  .input-field:focus {
+    border-color: #55b5cb;
+    box-shadow: 0 0 12px rgba(85,181,203,0.22);
+  }
+
+  .input-field-light {
+    @apply w-full px-4 py-3 rounded-lg bg-white border border-gray-200 text-gray-900
+           placeholder-gray-400 text-sm transition-all duration-200 focus:outline-none;
+  }
+  .input-field-light:focus {
+    border-color: #55b5cb;
+    box-shadow: 0 0 0 3px rgba(85,181,203,0.15);
+  }
+
+  .input-field-white {
+    @apply w-full px-4 py-3 rounded-lg bg-dark-light text-white
+           placeholder-mid text-sm transition-all duration-200 focus:outline-none;
+    border: 1px solid rgba(255,255,255,0.20);
+  }
+  .input-field-white:focus {
+    border-color: #55b5cb;
+    box-shadow: 0 0 12px rgba(85,181,203,0.22);
+  }
+
+  /* ── Glow utilities ── */
+  .text-glow {
+    text-shadow: 0 0 24px rgba(85, 181, 203, 0.55);
+  }
+
+  .divider-glow {
+    @apply w-14 h-0.5 bg-accent rounded-full;
+    box-shadow: 0 0 10px rgba(85, 181, 203, 0.55);
+  }
+
+  /* ── Badges — raw CSS only, no arbitrary opacity in @apply ── */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md
+           text-xs font-semibold uppercase tracking-wide;
+  }
+  .badge-accent {
+    @apply badge text-accent;
+    background: rgba(85,181,203,0.15);
+    border: 1px solid rgba(85,181,203,0.30);
+  }
+  .badge-success {
+    @apply badge text-green-400;
+    background: rgba(34,197,94,0.15);
+    border: 1px solid rgba(34,197,94,0.30);
+  }
+  .badge-warning {
+    @apply badge text-amber-400;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.30);
+  }
+  .badge-danger {
+    @apply badge text-red-400;
+    background: rgba(239,68,68,0.15);
+    border: 1px solid rgba(239,68,68,0.30);
+  }
+  .badge-mid {
+    @apply badge text-mid;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  /* ── Dashboard backward-compat aliases ── */
+  .btn-filled       { @apply btn-primary; }
+  .btn-filled-gold  { @apply btn-primary; }
+  .btn-hollow       { @apply btn-outline; }
+  .btn-hollow-gold  { @apply btn-outline; }
+  .btn-hollow-white { @apply btn-outline-white; }
+  .card-angled      { @apply card; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(85,181,203,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(85,181,203,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .bg-radial-glow {
+    background: radial-gradient(
+      ellipse 70% 55% at 50% -5%,
+      rgba(85,181,203,0.14) 0%,
+      transparent 68%
+    );
+  }
+
+  .border-glow {
+    border-color: rgba(85,181,203,0.38) !important;
+    box-shadow: 0 0 14px rgba(85,181,203,0.18);
+  }
+
+  .shadow-glow    { box-shadow: 0 0 24px rgba(85,181,203,0.35); }
+  .shadow-glow-sm { box-shadow: 0 0 12px rgba(85,181,203,0.22); }
+  .shadow-glow-lg { box-shadow: 0 0 48px rgba(85,181,203,0.42); }
+}
