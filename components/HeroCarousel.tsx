@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -23,33 +23,43 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
 
   useEffect(() => {
     if (slides.length === 0) return
-    const timer = setInterval(() => advance(1), 6000)
+    const timer = setInterval(() => advance(1), 7000)
     return () => clearInterval(timer)
   }, [current, slides.length])
 
-  const advance = (dir: number) => {
+  const advance = useCallback((dir: number) => {
     if (animating || slides.length === 0) return
     setAnimating(true)
     setCurrent(i => ((i + dir) + slides.length) % slides.length)
-    setTimeout(() => setAnimating(false), 600)
-  }
+    setTimeout(() => setAnimating(false), 700)
+  }, [animating, slides.length])
 
   if (slides.length === 0) {
     return (
-      <section className="relative min-h-[620px] bg-dark flex items-center overflow-hidden bg-grid bg-radial-glow">
-        <div className="max-w-7xl mx-auto px-6 py-32 text-center w-full">
-          <div className="divider-glow mx-auto mb-8" />
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Great Vehicles.<br />
-            <span className="text-accent text-glow">Real Deals.</span>
-          </h1>
-          <p className="text-lg text-mid max-w-2xl mx-auto mb-10">
-            Quality pre-owned vehicles in Springs, Gauteng. Every car is inspected,
-            fairly priced and ready to drive away.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/vehicles" className="btn-primary text-base px-8 py-3.5">Browse Our Stock</Link>
-            <Link href="/contact" className="btn-outline-white text-base px-8 py-3.5">Get In Touch</Link>
+      <section className="relative min-h-[640px] flex items-center overflow-hidden bg-[#020202] track-lines">
+        {/* Racing stripe decoration */}
+        <div className="absolute top-0 left-0 bottom-0 w-1 bg-gold" />
+        <div className="absolute top-0 left-3 bottom-0 w-0.5" style={{ background: 'rgba(228,172,41,0.3)' }} />
+
+        <div className="max-w-7xl mx-auto px-6 py-32 w-full">
+          <div className="max-w-2xl">
+            <p className="section-label mb-4">Newcastle, KZN</p>
+            <div className="gold-rule mb-6" />
+            <h1 className="font-display text-5xl md:text-7xl text-offwhite uppercase leading-none mb-4">
+              Performance
+              <br />
+              <span className="highlight text-5xl md:text-7xl" style={{ fontFamily: 'Libre Baskerville, serif', fontStyle: 'italic', color: '#e4ac29' }}>
+                Meets Value.
+              </span>
+            </h1>
+            <p className="text-muted text-lg max-w-xl leading-relaxed mt-6 mb-10">
+              Hand-picked pre-owned vehicles at honest prices. Every car on our floor
+              has been inspected and is ready to drive away.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/vehicles" className="btn-gold text-xs">Browse Our Stock</Link>
+              <Link href="/contact" className="btn-outline-white text-xs">Get In Touch</Link>
+            </div>
           </div>
         </div>
       </section>
@@ -57,16 +67,15 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
   }
 
   return (
-    <section className="relative min-h-[620px] bg-dark overflow-hidden">
+    <section className="relative min-h-[640px] overflow-hidden bg-[#020202]">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-            index === current
-              ? 'opacity-100 scale-100'
-              : 'opacity-0 scale-[1.02]'
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            index === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
+          {/* Image */}
           <div className="absolute inset-0">
             <Image
               src={slide.image_url}
@@ -75,27 +84,38 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               className="object-cover"
               priority={index === 0}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+            {/* Strong dark overlay for legibility */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(90deg, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.70) 50%, rgba(13,13,13,0.20) 100%)',
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to top, rgba(13,13,13,0.5) 0%, transparent 50%)' }}
+            />
           </div>
 
-          <div className="relative h-full flex items-center min-h-[620px]">
-            <div className="max-w-7xl mx-auto px-6 w-full">
+          {/* Racing stripe left edge */}
+          <div className="absolute top-0 left-0 bottom-0 w-1 bg-gold z-10" />
+          <div className="absolute top-0 left-3 bottom-0 w-0.5 z-10" style={{ background: 'rgba(228,172,41,0.3)' }} />
+
+          {/* Content */}
+          <div className="relative z-10 h-full flex items-center min-h-[640px]">
+            <div className="max-w-7xl mx-auto px-8 md:px-12 w-full">
               <div className="max-w-2xl">
-                <div className="divider-glow mb-7" />
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-5 leading-tight">
+                <p className="section-label mb-4">Affordable Wheels — Newcastle</p>
+                <div className="gold-rule mb-6" />
+                <h1 className="font-display text-4xl md:text-6xl xl:text-7xl text-offwhite uppercase leading-none mb-4">
                   {slide.title}
                 </h1>
-                <p className="text-lg text-white/70 mb-10 max-w-xl leading-relaxed">
+                <p className="text-base md:text-lg max-w-lg leading-relaxed mb-10" style={{ color: 'rgba(245,244,240,0.7)' }}>
                   {slide.subtitle}
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link href="/vehicles" className="btn-primary text-base px-8 py-3.5">
-                    Browse Stock
-                  </Link>
-                  <Link href="/contact" className="btn-outline-white text-base px-8 py-3.5">
-                    Contact Us
-                  </Link>
+                  <Link href="/vehicles" className="btn-gold text-xs">Browse Stock</Link>
+                  <Link href="/contact" className="btn-outline-white text-xs">Contact Us</Link>
                 </div>
               </div>
             </div>
@@ -103,36 +123,49 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
         </div>
       ))}
 
-      {/* Bottom bar — arrows on edges, dots centred, all on the same row */}
+      {/* Controls */}
       {slides.length > 1 && (
-        <div className="absolute bottom-7 left-0 right-0 z-10 flex items-center px-6">
+        <div className="absolute bottom-8 left-0 right-0 z-20 flex items-center px-8 md:px-12">
           <button
             onClick={() => advance(-1)}
-            className="w-11 h-11 rounded-full bg-black/50 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all duration-200 flex-shrink-0"
+            className="w-10 h-10 flex items-center justify-center border border-charcoal bg-black/60 text-muted hover:border-gold hover:text-gold transition-all duration-200"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          <div className="flex-1 flex items-center justify-center gap-2">
+          <div className="flex-1 flex items-center justify-center gap-3">
             {slides.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { if (!animating) { setAnimating(true); setCurrent(i); setTimeout(() => setAnimating(false), 600) } }}
-                className={`rounded-full transition-all duration-300 ${
-                  i === current
-                    ? 'w-8 h-2 bg-accent shadow-glow-sm'
-                    : 'w-2 h-2 bg-white/30 hover:bg-white/60'
-                }`}
+                onClick={() => {
+                  if (!animating) {
+                    setAnimating(true)
+                    setCurrent(i)
+                    setTimeout(() => setAnimating(false), 700)
+                  }
+                }}
+                className="h-0.5 transition-all duration-500"
+                style={{
+                  width: i === current ? '40px' : '16px',
+                  background: i === current ? '#e4ac29' : 'rgba(255,255,255,0.25)',
+                }}
               />
             ))}
           </div>
 
           <button
             onClick={() => advance(1)}
-            className="w-11 h-11 rounded-full bg-black/50 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all duration-200 flex-shrink-0"
+            className="w-10 h-10 flex items-center justify-center border border-charcoal bg-black/60 text-muted hover:border-gold hover:text-gold transition-all duration-200"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
+        </div>
+      )}
+
+      {/* Slide counter */}
+      {slides.length > 1 && (
+        <div className="absolute top-8 right-8 z-20 text-xs font-bold tracking-widest text-muted">
+          {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
         </div>
       )}
     </section>

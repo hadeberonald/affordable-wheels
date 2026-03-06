@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
-const WHATSAPP_NUMBER = '27113623114'
+const WHATSAPP_NUMBER = '27823447996'
 
 export default function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false)
-  const [message, setMessage] = useState("Hi Dealz On Wheelz, I'd like to find out more about your vehicles.")
+  const [message, setMessage] = useState("Hi Affordable Wheels, I'd like to find out more about your vehicles.")
   const [showBubble, setShowBubble] = useState(false)
   const [dismissed, setDismissed] = useState(false)
 
@@ -29,29 +29,29 @@ export default function WhatsAppWidget() {
           className="fixed bottom-24 right-6 z-[90] cursor-pointer"
           onClick={() => { setIsOpen(true); setShowBubble(false) }}
         >
-          <div className="relative bg-dark-card border border-dark-border rounded-xl px-4 py-3 text-sm text-white shadow-glow-sm max-w-[200px]">
+          <div className="relative bg-charcoal border border-charcoal-border px-4 py-3 text-sm text-offwhite shadow-card max-w-[200px]">
             <button
               onClick={e => { e.stopPropagation(); setShowBubble(false); setDismissed(true) }}
-              className="absolute -top-2 -right-2 w-5 h-5 bg-dark-border rounded-full flex items-center justify-center text-mid hover:text-white transition-colors"
+              className="absolute -top-2 -right-2 w-5 h-5 bg-charcoal border border-charcoal-border flex items-center justify-center text-muted hover:text-offwhite transition-colors"
             >
               <X className="w-2.5 h-2.5" />
             </button>
             Chat with us on WhatsApp
-            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-dark-card border-r border-b border-dark-border rotate-45" />
+            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-charcoal border-r border-b border-charcoal-border rotate-45" />
           </div>
         </div>
       )}
 
       {/* Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-[90] w-80 rounded-xl overflow-hidden shadow-glow border border-dark-border">
+        <div className="fixed bottom-24 right-6 z-[90] w-80 shadow-card-hover border border-charcoal overflow-hidden">
           <div className="bg-[#25D366] px-5 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+              <div className="w-9 h-9 bg-white/20 flex items-center justify-center">
                 <WhatsAppSVG className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-white font-semibold text-sm">Dealz On Wheelz</p>
+                <p className="text-white font-bold text-sm">Affordable Wheels</p>
                 <p className="text-white/70 text-xs">Usually replies within minutes</p>
               </div>
             </div>
@@ -60,11 +60,11 @@ export default function WhatsAppWidget() {
             </button>
           </div>
           <div className="bg-[#ECE5DD] p-4">
-            <div className="bg-white rounded-xl rounded-tl-none px-3 py-2.5 shadow-sm max-w-[85%] mb-4">
-              <p className="text-sm text-gray-700">Hi there! How can we help you today? Send us a message and we'll get back to you right away.</p>
-              <p className="text-[10px] text-gray-400 text-right mt-1">Dealz On Wheelz</p>
+            <div className="bg-white px-3 py-2.5 shadow-sm max-w-[85%] mb-4">
+              <p className="text-sm text-gray-700">Hi there! How can we help you today? Send us a message and we will get back to you right away.</p>
+              <p className="text-[10px] text-gray-400 text-right mt-1">Affordable Wheels</p>
             </div>
-            <div className="bg-white rounded-full flex items-center gap-2 px-4 py-2 shadow-sm">
+            <div className="bg-white flex items-center gap-2 px-4 py-2 shadow-sm">
               <textarea
                 value={message}
                 onChange={e => setMessage(e.target.value)}
@@ -74,7 +74,7 @@ export default function WhatsAppWidget() {
               />
               <button
                 onClick={openWhatsApp}
-                className="w-9 h-9 bg-[#25D366] rounded-full flex items-center justify-center flex-shrink-0 hover:bg-[#1da851] transition-colors"
+                className="w-9 h-9 bg-[#25D366] flex items-center justify-center flex-shrink-0 hover:bg-[#1da851] transition-colors"
               >
                 <SendSVG className="w-4 h-4 text-white ml-0.5" />
               </button>
@@ -86,7 +86,7 @@ export default function WhatsAppWidget() {
       {/* FAB */}
       <button
         onClick={() => { setIsOpen(o => !o); setShowBubble(false) }}
-        className="fixed bottom-6 right-6 z-[90] w-14 h-14 bg-[#25D366] hover:bg-[#1da851] text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
+        className="fixed bottom-6 right-6 z-[90] w-14 h-14 bg-[#25D366] hover:bg-[#1da851] text-white shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
         aria-label="Chat on WhatsApp"
       >
         {isOpen ? <X className="w-6 h-6" /> : <WhatsAppSVG className="w-7 h-7" />}

@@ -7,17 +7,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowLeft, Calendar, Gauge, Fuel, Settings, Palette,
-  ShieldCheck, Car, ChevronLeft, ChevronRight, Users, Wrench, Check, X
+  ShieldCheck, Car, ChevronLeft, ChevronRight, Users, Wrench, Check, X, Phone
 } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
-const WHATSAPP_NUMBER = '27113623114'
+const WHATSAPP_NUMBER = '27823447996'
 
 function buildVehicleWhatsAppUrl(vehicle: Vehicle) {
   const price = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', minimumFractionDigits: 0 }).format(vehicle.price)
   const mileage = new Intl.NumberFormat('en-ZA').format(vehicle.mileage)
   const message =
-`Hi Dealz On Wheelz! I am interested in the following vehicle:
+`Hi Affordable Wheels! I am interested in the following vehicle:
 
 ${vehicle.year} ${vehicle.make} ${vehicle.model}
 Price: ${price}
@@ -84,8 +84,8 @@ function Lightbox({ imgs, startIdx, onClose }: { imgs: string[]; startIdx: numbe
   return (
     <div className="fixed inset-0 z-[200] bg-black flex flex-col" onClick={onClose}>
       <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 bg-black/80" onClick={e => e.stopPropagation()}>
-        <span className="text-white/60 text-sm">{idx + 1} / {imgs.length}</span>
-        <button onClick={onClose} className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">
+        <span className="text-muted text-sm font-bold">{idx + 1} / {imgs.length}</span>
+        <button onClick={onClose} className="w-10 h-10 border border-charcoal flex items-center justify-center text-offwhite hover:border-gold hover:text-gold transition-all">
           <X className="w-5 h-5" />
         </button>
       </div>
@@ -93,11 +93,11 @@ function Lightbox({ imgs, startIdx, onClose }: { imgs: string[]; startIdx: numbe
         <Image key={idx} src={imgs[idx]} alt="" fill className="object-contain" sizes="100vw" priority />
         {imgs.length > 1 && (
           <>
-            <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all">
-              <ChevronLeft className="w-6 h-6" />
+            <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 border border-charcoal bg-black/70 text-muted flex items-center justify-center hover:border-gold hover:text-gold transition-all">
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all">
-              <ChevronRight className="w-6 h-6" />
+            <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 border border-charcoal bg-black/70 text-muted flex items-center justify-center hover:border-gold hover:text-gold transition-all">
+              <ChevronRight className="w-5 h-5" />
             </button>
           </>
         )}
@@ -106,7 +106,12 @@ function Lightbox({ imgs, startIdx, onClose }: { imgs: string[]; startIdx: numbe
         <div className="flex-shrink-0 bg-black/80 py-3 px-4" onClick={e => e.stopPropagation()}>
           <div className="flex gap-2 justify-center overflow-x-auto pb-1">
             {imgs.map((img, i) => (
-              <button key={i} onClick={() => setIdx(i)} className={`relative h-14 w-20 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${i === idx ? 'border-accent shadow-glow-sm' : 'border-white/15 hover:border-accent/50'}`}>
+              <button
+                key={i}
+                onClick={() => setIdx(i)}
+                className="relative h-14 w-20 flex-shrink-0 overflow-hidden border-2 transition-all"
+                style={{ borderColor: i === idx ? '#e4ac29' : 'rgba(255,255,255,0.15)' }}
+              >
                 <Image src={img} alt="" fill className="object-cover" sizes="80px" />
               </button>
             ))}
@@ -136,24 +141,24 @@ export default function VehicleDetailPage() {
     setLoading(false)
   }
 
-  const formatPrice   = (p: number) => new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', minimumFractionDigits: 0 }).format(p)
+  const formatPrice = (p: number) => new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', minimumFractionDigits: 0 }).format(p)
   const formatMileage = (m: number) => new Intl.NumberFormat('en-ZA').format(m) + ' km'
-  const wrap          = (i: number, len: number) => ((i % len) + len) % len
+  const wrap = (i: number, len: number) => ((i % len) + len) % len
 
   if (loading) return (
-    <div className="pt-20 min-h-screen flex items-center justify-center bg-dark">
+    <div className="pt-[73px] min-h-screen flex items-center justify-center bg-[#020202]">
       <div className="text-center">
-        <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="mt-4 text-mid text-sm">Loading vehicle details...</p>
+        <div className="w-10 h-10 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="mt-4 text-muted text-sm">Loading vehicle details...</p>
       </div>
     </div>
   )
 
   if (!vehicle) return (
-    <div className="pt-20 min-h-screen flex items-center justify-center bg-dark">
+    <div className="pt-[73px] min-h-screen flex items-center justify-center bg-[#020202]">
       <div className="text-center">
-        <p className="text-mid mb-4">Vehicle not found.</p>
-        <Link href="/vehicles" className="btn-outline">Back to Stock</Link>
+        <p className="text-muted mb-4">Vehicle not found.</p>
+        <Link href="/vehicles" className="btn-outline-gold text-xs">Back to Stock</Link>
       </div>
     </div>
   )
@@ -161,15 +166,15 @@ export default function VehicleDetailPage() {
   const imgs = vehicle.images || []
 
   return (
-    <div className="pt-20 min-h-screen bg-dark">
+    <div className="pt-[67px] md:pt-[73px] min-h-screen bg-[#020202]">
       {lightboxOpen && imgs.length > 0 && (
         <Lightbox imgs={imgs} startIdx={lightboxStart} onClose={() => setLightboxOpen(false)} />
       )}
 
       {/* Back bar */}
-      <div className="bg-dark-light border-b border-dark-border py-4">
+      <div className="bg-[#020202] border-b border-charcoal py-4">
         <div className="max-w-7xl mx-auto px-6">
-          <Link href="/vehicles" className="inline-flex items-center gap-2 text-mid hover:text-accent transition-colors text-sm">
+          <Link href="/vehicles" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted hover:text-gold transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to All Vehicles
           </Link>
         </div>
@@ -181,37 +186,48 @@ export default function VehicleDetailPage() {
           {/* Gallery */}
           <div>
             <div
-              className="relative h-96 md:h-[480px] mb-3 rounded-xl overflow-hidden border border-dark-border cursor-pointer group"
+              className="relative h-96 md:h-[480px] mb-3 overflow-hidden cursor-pointer group border border-charcoal"
               onClick={() => { setLightboxStart(currentImageIndex); setLightboxOpen(true) }}
             >
               {imgs.length > 0 ? (
                 <>
-                  <Image src={imgs[currentImageIndex]} alt={`${vehicle.make} ${vehicle.model}`} fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl" priority sizes="(max-width: 1024px) 100vw, 50vw" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 rounded-xl">
-                    <span className="bg-white text-black text-sm px-4 py-2 font-semibold rounded-lg">Click to Enlarge</span>
+                  <Image
+                    src={imgs[currentImageIndex]}
+                    alt={`${vehicle.make} ${vehicle.model}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
+                    <span className="bg-gold text-black text-xs px-4 py-2 font-bold uppercase tracking-widest">Click to Enlarge</span>
                   </div>
                   {imgs.length > 1 && (
                     <>
-                      <button onClick={e => { e.stopPropagation(); setCurrentIdx(i => wrap(i - 1, imgs.length)) }}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all">
+                      <button
+                        onClick={e => { e.stopPropagation(); setCurrentIdx(i => wrap(i - 1, imgs.length)) }}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-charcoal bg-black/70 text-muted flex items-center justify-center hover:border-gold hover:text-gold transition-all"
+                      >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
-                      <button onClick={e => { e.stopPropagation(); setCurrentIdx(i => wrap(i + 1, imgs.length)) }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all">
+                      <button
+                        onClick={e => { e.stopPropagation(); setCurrentIdx(i => wrap(i + 1, imgs.length)) }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-charcoal bg-black/70 text-muted flex items-center justify-center hover:border-gold hover:text-gold transition-all"
+                      >
                         <ChevronRight className="w-5 h-5" />
                       </button>
                     </>
                   )}
                 </>
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-dark-light text-mid text-sm rounded-xl">No Image Available</div>
+                <div className="absolute inset-0 flex items-center justify-center bg-charcoal text-muted text-sm">No Image Available</div>
               )}
+              {/* Condition badge */}
               <div className="absolute top-3 left-3">
-                <span className="badge-accent">{vehicle.condition}</span>
+                <span className="badge badge-gold">{vehicle.condition}</span>
               </div>
               {imgs.length > 1 && (
-                <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-md">
+                <div className="absolute bottom-3 right-3 bg-black/70 text-muted text-xs px-2 py-1 font-bold">
                   {currentImageIndex + 1}/{imgs.length}
                 </div>
               )}
@@ -220,8 +236,12 @@ export default function VehicleDetailPage() {
             {imgs.length > 1 && (
               <div className="grid grid-cols-6 gap-2">
                 {imgs.map((img, i) => (
-                  <button key={i} onClick={() => { setCurrentIdx(i); setLightboxStart(i); setLightboxOpen(true) }}
-                    className={`relative h-16 rounded-lg overflow-hidden border-2 transition-all hover:scale-105 ${i === currentImageIndex ? 'border-accent shadow-glow-sm' : 'border-dark-border hover:border-accent/50'}`}>
+                  <button
+                    key={i}
+                    onClick={() => { setCurrentIdx(i); setLightboxStart(i); setLightboxOpen(true) }}
+                    className="relative h-16 overflow-hidden border-2 transition-all hover:scale-105"
+                    style={{ borderColor: i === currentImageIndex ? '#e4ac29' : '#2e2e2e' }}
+                  >
                     <Image src={img} alt="" fill className="object-cover" sizes="80px" />
                   </button>
                 ))}
@@ -232,39 +252,44 @@ export default function VehicleDetailPage() {
           {/* Details */}
           <div>
             <div className="mb-7">
-              <p className="text-xs text-mid uppercase tracking-widest mb-1">{vehicle.body_type} · {vehicle.condition}</p>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+              <p className="text-xs font-bold uppercase tracking-widest text-muted mb-2">
+                {vehicle.body_type} &middot; {vehicle.condition}
+              </p>
+              <h1 className="font-display text-3xl md:text-4xl text-offwhite uppercase leading-none mb-4">
                 {vehicle.year} {vehicle.make} {vehicle.model}
               </h1>
-              <div className="text-4xl font-bold text-accent text-glow">
-                {formatPrice(vehicle.price)}
+              <div
+                className="inline-block px-4 py-2"
+                style={{ background: '#e4ac29' }}
+              >
+                <span className="font-display text-2xl text-black">{formatPrice(vehicle.price)}</span>
               </div>
-              <p className="text-mid text-sm mt-1">Cash sale · No finance</p>
+              <p className="text-muted text-xs mt-2 uppercase tracking-widest">Cash sale</p>
             </div>
 
             {/* Key specs */}
             <div className="grid grid-cols-2 gap-3 mb-7">
               {[
-                { Icon: Calendar, label: 'Year',         value: String(vehicle.year) },
-                { Icon: Gauge,    label: 'Mileage',      value: formatMileage(vehicle.mileage) },
+                { Icon: Calendar, label: 'Year', value: String(vehicle.year) },
+                { Icon: Gauge, label: 'Mileage', value: formatMileage(vehicle.mileage) },
                 { Icon: Settings, label: 'Transmission', value: vehicle.transmission },
-                { Icon: Fuel,     label: 'Fuel',         value: vehicle.fuel_type },
-                { Icon: Car,      label: 'Drivetrain',   value: vehicle.drivetrain },
-                { Icon: Palette,  label: 'Colour',       value: vehicle.color },
+                { Icon: Fuel, label: 'Fuel', value: vehicle.fuel_type },
+                { Icon: Car, label: 'Drivetrain', value: vehicle.drivetrain },
+                { Icon: Palette, label: 'Colour', value: vehicle.color },
               ].map(({ Icon, label, value }) => (
-                <div key={label} className="card p-4">
+                <div key={label} className="border border-charcoal p-4">
                   <div className="flex items-center gap-1.5 mb-1.5">
-                    <Icon className="w-3.5 h-3.5 text-accent" />
-                    <span className="text-[10px] text-mid uppercase tracking-wide">{label}</span>
+                    <Icon className="w-3.5 h-3.5 text-gold" />
+                    <span className="text-[10px] text-muted uppercase tracking-widest font-bold">{label}</span>
                   </div>
-                  <p className="text-base font-semibold text-white">{value}</p>
+                  <p className="text-sm font-semibold text-offwhite">{value}</p>
                 </div>
               ))}
             </div>
 
             {/* Specs table */}
-            <div className="card p-5 mb-7">
-              <h3 className="text-sm font-semibold text-white mb-4 pb-2 border-b border-dark-border">Specifications</h3>
+            <div className="border border-charcoal p-5 mb-7">
+              <h3 className="font-display text-xs uppercase tracking-widest text-offwhite mb-4 pb-2 border-b border-charcoal">Specifications</h3>
               <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
                 {([
                   ['Body Type', vehicle.body_type],
@@ -276,9 +301,9 @@ export default function VehicleDetailPage() {
                 ] as ([string, string] | null)[])
                   .filter((row): row is [string, string] => row !== null)
                   .map(([label, value]) => (
-                    <div key={label} className="flex justify-between py-1 border-b border-dark-border last:border-0">
-                      <span className="text-mid text-xs">{label}</span>
-                      <span className="font-medium text-white text-xs">{value}</span>
+                    <div key={label} className="flex justify-between py-1 border-b border-charcoal last:border-0">
+                      <span className="text-muted text-xs">{label}</span>
+                      <span className="font-medium text-offwhite text-xs">{value}</span>
                     </div>
                   ))}
               </div>
@@ -287,13 +312,13 @@ export default function VehicleDetailPage() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a href={buildVehicleWhatsAppUrl(vehicle)} target="_blank" rel="noopener noreferrer" className="flex-1">
-                <button className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-semibold px-6 py-3.5 rounded-lg transition-colors duration-200">
+                <button className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-bold text-xs uppercase tracking-widest px-6 py-3.5 transition-colors">
                   <WhatsAppIcon className="w-5 h-5" />
                   Inquire on WhatsApp
                 </button>
               </a>
               <Link href="/contact" className="flex-1">
-                <button className="btn-outline w-full py-3.5">Book a Test Drive</button>
+                <button className="btn-outline-gold w-full py-3.5 text-xs">Book a Test Drive</button>
               </Link>
             </div>
           </div>
@@ -301,46 +326,48 @@ export default function VehicleDetailPage() {
 
         {/* Description */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-white mb-5">Vehicle Description</h2>
-          <div className="card p-8">
-            <p className="text-mid leading-relaxed whitespace-pre-line text-sm">{vehicle.description}</p>
+          <h2 className="font-display text-2xl uppercase text-offwhite mb-5">Vehicle Description</h2>
+          <div className="gold-rule mb-6" />
+          <div className="border border-charcoal p-8">
+            <p className="text-muted leading-relaxed whitespace-pre-line text-sm">{vehicle.description}</p>
           </div>
         </div>
 
         {/* Features */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-white mb-5">Features & Equipment</h2>
+          <h2 className="font-display text-2xl uppercase text-offwhite mb-5">Features & Equipment</h2>
+          <div className="gold-rule mb-6" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {Object.entries(FEATURE_CATEGORIES).map(([catKey, cat]) => {
               const enabled = cat.features.filter(f => vehicle[f.key as keyof Vehicle] === true)
               if (enabled.length === 0 && catKey !== 'safety' && catKey !== 'history') return null
               return (
-                <div key={catKey} className="card p-6">
-                  <h3 className="text-base font-semibold text-white mb-4 pb-2 border-b border-accent/30 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-glow-sm" />
+                <div key={catKey} className="border border-charcoal p-6">
+                  <h3 className="font-display text-xs uppercase tracking-widest text-offwhite mb-4 pb-2 border-b border-charcoal flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-gold" />
                     {cat.title}
                   </h3>
                   <div className="space-y-2">
                     {catKey === 'safety' && vehicle.airbags > 0 && (
-                      <div className="flex items-center gap-2 text-sm text-mid">
-                        <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <div className="flex items-center gap-2 text-sm text-muted">
+                        <Check className="w-3.5 h-3.5 text-gold flex-shrink-0" />
                         {vehicle.airbags} Airbags
                       </div>
                     )}
                     {enabled.map(f => (
-                      <div key={f.key} className="flex items-center gap-2 text-sm text-mid">
-                        <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <div key={f.key} className="flex items-center gap-2 text-sm text-muted">
+                        <Check className="w-3.5 h-3.5 text-gold flex-shrink-0" />
                         {f.label}
                       </div>
                     ))}
                     {catKey === 'history' && (
-                      <div className="flex items-center gap-2 text-sm text-mid mt-2 pt-2 border-t border-dark-border">
-                        <Users className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>{vehicle.owners_count === 0 ? 'Brand New' : vehicle.owners_count === 1 ? '1 Previous Owner' : `${vehicle.owners_count} Previous Owners`}</span>
+                      <div className="flex items-center gap-2 text-sm text-muted mt-2 pt-2 border-t border-charcoal">
+                        <Users className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                        <span>{vehicle.owners_count === 0 ? 'No Previous Owners' : vehicle.owners_count === 1 ? '1 Previous Owner' : `${vehicle.owners_count} Previous Owners`}</span>
                       </div>
                     )}
                     {enabled.length === 0 && catKey !== 'safety' && catKey !== 'history' && (
-                      <p className="text-mid text-xs italic">No features listed</p>
+                      <p className="text-muted text-xs italic">No features listed</p>
                     )}
                   </div>
                 </div>
@@ -349,26 +376,45 @@ export default function VehicleDetailPage() {
           </div>
         </div>
 
-        {/* History */}
+        {/* Vehicle History */}
         {(vehicle.service_history || vehicle.warranty || vehicle.vin || vehicle.license_plate) && (
           <div className="mt-16">
-            <h2 className="text-2xl font-bold text-white mb-5">Vehicle History</h2>
-            <div className="card p-8">
+            <h2 className="font-display text-2xl uppercase text-offwhite mb-5">Vehicle History</h2>
+            <div className="gold-rule mb-6" />
+            <div className="border border-charcoal p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {vehicle.service_history && (
                   <div className="flex items-start gap-3">
-                    <Wrench className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                    <div><h4 className="font-semibold text-white text-sm mb-0.5">Full Service History</h4><p className="text-mid text-xs">Complete service records available</p></div>
+                    <Wrench className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-offwhite text-xs uppercase tracking-widest mb-0.5">Full Service History</h4>
+                      <p className="text-muted text-xs">Complete service records available</p>
+                    </div>
                   </div>
                 )}
                 {vehicle.warranty && (
                   <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                    <div><h4 className="font-semibold text-white text-sm mb-0.5">Warranty Coverage</h4><p className="text-mid text-xs">{vehicle.warranty_expiry ? `Valid until ${new Date(vehicle.warranty_expiry).toLocaleDateString()}` : 'Active warranty included'}</p></div>
+                    <ShieldCheck className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-offwhite text-xs uppercase tracking-widest mb-0.5">Warranty Coverage</h4>
+                      <p className="text-muted text-xs">
+                        {vehicle.warranty_expiry ? `Valid until ${new Date(vehicle.warranty_expiry).toLocaleDateString()}` : 'Active warranty included'}
+                      </p>
+                    </div>
                   </div>
                 )}
-                {vehicle.vin && <div><h4 className="font-semibold text-white text-sm mb-0.5">VIN Number</h4><p className="text-mid text-xs font-mono">{vehicle.vin}</p></div>}
-                {vehicle.license_plate && <div><h4 className="font-semibold text-white text-sm mb-0.5">License Plate</h4><p className="text-mid text-xs font-mono">{vehicle.license_plate}</p></div>}
+                {vehicle.vin && (
+                  <div>
+                    <h4 className="font-bold text-offwhite text-xs uppercase tracking-widest mb-0.5">VIN Number</h4>
+                    <p className="text-muted text-xs font-mono">{vehicle.vin}</p>
+                  </div>
+                )}
+                {vehicle.license_plate && (
+                  <div>
+                    <h4 className="font-bold text-offwhite text-xs uppercase tracking-widest mb-0.5">License Plate</h4>
+                    <p className="text-muted text-xs font-mono">{vehicle.license_plate}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -377,13 +423,14 @@ export default function VehicleDetailPage() {
         {/* Trust cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
-            { title: 'Cash Sale',         body: 'Simple, transparent cash transactions. No hidden fees or finance complications.' },
-            { title: 'Trade-In Welcome',  body: 'We offer honest trade-in valuations on your current vehicle.' },
-            { title: 'Quality Assured',   body: 'Every vehicle on our floor has been inspected before listing.' },
+            { title: 'Cash Sale', body: 'Simple, transparent cash transactions. No hidden fees or finance complications.' },
+            { title: 'Trade-In Welcome', body: 'We offer honest trade-in valuations on your current vehicle, no obligation.' },
+            { title: 'Quality Assured', body: 'Every vehicle on our floor has been thoroughly inspected before listing.' },
           ].map(({ title, body }) => (
-            <div key={title} className="card-hover p-6 text-center">
-              <h3 className="text-base font-semibold text-accent mb-2">{title}</h3>
-              <p className="text-mid text-xs leading-relaxed">{body}</p>
+            <div key={title} className="border border-charcoal p-6 text-center group hover:border-gold-subtle transition-all duration-300">
+              <div className="gold-rule mx-auto mb-4" />
+              <h3 className="font-display text-xs uppercase tracking-widest text-gold mb-2">{title}</h3>
+              <p className="text-muted text-xs leading-relaxed">{body}</p>
             </div>
           ))}
         </div>
